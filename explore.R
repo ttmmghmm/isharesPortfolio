@@ -50,11 +50,11 @@ getCashflowMatrix <- function(d) {
 
 printResults <- function(d,m,o,investment=100000) {
   names(o) <- colnames(m)
-  o <- o[o > 0]
   print("INVESTMENTS")
   print("------------------------------------------------")
-  print(o)
   y <- rowSums(t(t(m) * o))
+  print(o)
+  o <- o[o > 0]
   y <- aggregate(as.vector(y), by=list(month=as.numeric(unlist(regmatches(names(y),regexpr("\\d+$",names(y)))))), sum)
   y$monthly <- investment * y$x
   y$cumulative <- cumsum(y$monthly)
@@ -79,5 +79,5 @@ d <- getProducts(ids)
 d <- getEnhanced(d)
 #d <- getEnhanced(getSavedData())
 m <- getCashflowMatrix(d)
-o <- getOptimisedWeights(m, 0.045)
+o <- getOptimisedWeights(m, 0.05)
 printResults(d,m,o,100000)
