@@ -53,8 +53,8 @@ printResults <- function(d,m,o,investment=100000) {
   print("INVESTMENTS")
   print("------------------------------------------------")
   y <- rowSums(t(t(m) * o))
-  print(o)
   o <- o[o > 0]
+  print(o)
   y <- aggregate(as.vector(y), by=list(month=as.numeric(unlist(regmatches(names(y),regexpr("\\d+$",names(y)))))), sum)
   y$monthly <- investment * y$x
   y$cumulative <- cumsum(y$monthly)
